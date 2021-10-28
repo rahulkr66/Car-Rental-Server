@@ -1,17 +1,39 @@
-const express = require('express')
-const VehicleController = express.Router()
-const Vehicle = require('../models/vehicle')
-const Merchant = require('../models/merchant')
-const { VerifyToken } = require('../middleware/verify_token')
+const express = require("express");
+const VehicleController = express.Router();
+const Vehicle = require("../models/vehicle");
+const Merchant = require("../models/merchant");
+const { VerifyToken } = require("../middleware/verify_token");
 
-VehicleController.get('/', VerifyToken, async (req, res) => {
+VehicleController.get("/", VerifyToken, async (req, res) => {
     try {
-        const vehicles = await Vehicle.find({})
-        res.status(200).json(vehicles)
+        const vehicles = await Vehicle.find({});
+        res.status(200).json(vehicles);
     } catch (err) {
-        console.log(err)
-        res.status(500).json()
+        console.log(err);
+        res.status(500).json();
     }
-})
+});
 
-module.exports = VehicleController
+VehicleController.post("/", VerifyToken, async (req, res) => {
+    try {
+        const vehicle = req.body;
+        Vehicle.create(
+            {
+                ...vehicle,
+            },
+            (err, v) => {
+                if (err) {
+                    return res
+                        .status(500)
+                        .json({ message: "Some error occurred. Please try again" });
+                }
+
+                res.status(200).json(v);
+            }
+        );
+    } catch (e) {
+        res.status(500).json();
+    }
+});
+
+module.exports = VehicleController;
