@@ -16,6 +16,10 @@ const VehicleSchema = new mongoose.Schema({
     vehicleRentRate: {
         type: Number,
         required:true,
+    },
+    isBooked: {
+        type: Boolean,
+        default: false,
     }
 })
 
