@@ -102,7 +102,7 @@ AuthController.post("/customer/register", async (req, res) => {
     const customerEmail = req.body.customerEmail;
     const password = req.body.password;
     const customerContact = req.body.customerContact;
-
+    const customerAddress = req.body.customerAddress;
     const hashedPassword = bcrypt.hashSync(password, 8);
     Customer.create(
         {
@@ -110,9 +110,11 @@ AuthController.post("/customer/register", async (req, res) => {
             customerEmail: customerEmail,
             password: hashedPassword,
             customerContact: customerContact,
+            customerAddress: customerAddress
         },
         (e, customer) => {
             if (e) {
+                console.log(e);
                 const message =
                     e.code == 11000 ? "customer already registered" : "Try again later";
                 return res.status(500).json({
