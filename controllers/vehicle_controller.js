@@ -35,5 +35,15 @@ VehicleController.post("/", VerifyToken, async (req, res) => {
         res.status(500).json();
     }
 });
+VehicleController.get("/merchant/:id", VerifyToken, async (req, res) => {
+    // get all org visits
+    try {
+        const merchantId = req.params.id;
+        const vehicles = await Vehicle.find({ merchantId: merchantId });
+        res.status(200).json(vehicles);
+    } catch (e) {
+        res.status(500).json();
+    }
+});
 
 module.exports = VehicleController;

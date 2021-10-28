@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const db = require('./services/database')
+const requestLogger = require('./middleware/request_logger')
 const CustomerController = require('./controllers/customer_controller')
 const MerchantController = require('./controllers/merchant_controller')
 const VehicleController = require('./controllers/vehicle_controller')
@@ -14,6 +15,7 @@ app.use(cors());
 app.use(express.urlencoded({
     extended: true
 }))
+app.use(requestLogger);
 
 app.get("/api", (req, res) => {
     res.send("Hello world!")
