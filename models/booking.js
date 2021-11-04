@@ -9,6 +9,10 @@ const BookingSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true
     },
+    vehicleId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+    },
     bookingCost: {
         type: Number,
         required: true,

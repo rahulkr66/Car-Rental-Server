@@ -35,6 +35,19 @@ VehicleController.post("/", VerifyToken, async (req, res) => {
         res.status(500).json();
     }
 });
+
+VehicleController.get("/:id", VerifyToken, async (req, res) => {
+    try{
+        const vehicle = await Vehicle.findById(req.params.id);
+        console.log(vehicle);
+        if(!vehicle) return res.status(404).json();
+
+        res.status(200).json(vehicle);
+    }catch(e){
+        res.status(500).json();
+    }
+});
+
 VehicleController.get("/merchant/:id", VerifyToken, async (req, res) => {
     // get all org visits
     try {
