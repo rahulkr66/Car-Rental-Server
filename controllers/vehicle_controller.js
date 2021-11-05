@@ -36,18 +36,6 @@ VehicleController.post("/", VerifyToken, async (req, res) => {
     }
 });
 
-VehicleController.get("/:id", VerifyToken, async (req, res) => {
-    try{
-        const vehicle = await Vehicle.findById(req.params.id);
-        console.log(vehicle);
-        if(!vehicle) return res.status(404).json();
-
-        res.status(200).json(vehicle);
-    }catch(e){
-        res.status(500).json();
-    }
-});
-
 VehicleController.get("/merchant/:id", VerifyToken, async (req, res) => {
     // get all org visits
     try {
@@ -59,4 +47,29 @@ VehicleController.get("/merchant/:id", VerifyToken, async (req, res) => {
     }
 });
 
+VehicleController.post("/booked/:id", VerifyToken, async (req, res) => {
+    try {
+        const vehicleId = req.params.id;
+        const vehicle = await Vehicle.findById(vehicleId);
+        if (!vehicle) {
+            return res.status(404).json();
+        }
+        await vehicle.updateOne(req.body);
+        res.status(200).json();
+    } catch (e) {
+        res.status(500).json();
+    }
+});
+
+VehicleController.get("/:id", VerifyToken, async (req, res) => {
+    try {
+        const vehicle = await Vehicle.findById(req.params.id);
+        console.log(vehicle);
+        if (!vehicle) return res.status(404).json();
+
+        res.status(200).json(vehicle);
+    } catch (e) {
+        res.status(500).json();
+    }
+});
 module.exports = VehicleController;
