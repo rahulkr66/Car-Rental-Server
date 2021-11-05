@@ -2,6 +2,7 @@ const express = require('express')
 const BookingController = express.Router()
 const Booking = require("../models/booking");
 const { VerifyToken } = require("../middleware/verify_token");
+const mongoose = require("mongoose");
 
 BookingController.post('/', VerifyToken, async (req, res) => {
     try {
@@ -24,6 +25,15 @@ BookingController.post('/', VerifyToken, async (req, res) => {
     }
 });
 
+BookingController.get("/customer/:id", VerifyToken, async (req, res) => {
+    try {
+        const bookings = await Booking.find({ customerId: req.params.id });
+        res.status(200).json(bookings);
+    } catch (e) {
+        res.status(500).json();
+    }
+});
+
 BookingController.put("/:id", VerifyToken, async (req, res) => {
     try {
         const updatedBooking = req.body;
@@ -39,9 +49,11 @@ BookingController.put("/:id", VerifyToken, async (req, res) => {
 
 BookingController.delete("/:id", VerifyToken, async (req, res) => {
     try {
-        await Booking.deleteOne(req.params.id);
+        const id = mongoose.Types.ObjectId(req.params.id);
+        await Booking.deleteOne(id);
         res.status(200).json();
     } catch (e) {
+        console.log(e);
         res.status(500).json();
     }
 });

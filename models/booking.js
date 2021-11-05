@@ -13,6 +13,14 @@ const BookingSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
     },
+    vehicleModel: {
+        type: String,
+        required:true,
+    },
+    vehicleRegistration: {
+        type: String,
+        required:true,
+    },
     bookingCost: {
         type: Number,
         required: true,
