@@ -6,10 +6,8 @@ const { VerifyToken } = require("../middleware/verify_token");
 CustomerController.get("/:id", VerifyToken, async (req, res) => {
     try {
         const customerId = req.params.id;
-        const customer = await Customer.findById(customerId);
-        res.status(200).json({
-            body: customer
-        });
+        const customer = await Customer.findById(customerId,{ password: 0 });
+        res.status(200).json(customer);
     } catch (e) {
         res.status(500).json();
     }

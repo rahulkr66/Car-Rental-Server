@@ -19,9 +19,7 @@ MerchantController.get("/:id", VerifyToken, async (req, res) => {
         const merchantId = req.params.id;
         const merchant = await Merchant.findById(merchantId);
 
-        res.status(200).json({
-            body: merchant
-        });
+        res.status(200).json(merchant);
     } catch (e) {
         console.log(e);
         res.status(500).json();
