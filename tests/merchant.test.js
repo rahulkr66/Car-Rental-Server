@@ -95,15 +95,6 @@ describe("Testing all merchant related routes", () => {
                 expect(res.type).toBe('application/json')
             })
     })
-    test('GET /api/vehicles/ with authentication', async () => {
-        await request
-            .get('/api/vehicles')
-            .set("x-access-token",token)
-            .then(res => {
-                expect(res.statusCode).toBe(200)
-                expect(res.type).toBe('application/json')
-            })
-    })
     test('GET /api/vehicles/ without authentication', async () => {
         await request
             .get('/api/vehicles/')
