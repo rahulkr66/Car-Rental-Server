@@ -69,7 +69,7 @@ BookingController.put("/:id", VerifyToken, async (req, res) => {
 BookingController.delete("/:id", VerifyToken, async (req, res) => {
     try {
         const id = mongoose.Types.ObjectId(req.params.id);
-        await Booking.deleteOne(id);
+        await Booking.deleteOne({ _id: id});
         res.status(200).json();
     } catch (e) {
         console.log(e);
