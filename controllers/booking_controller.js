@@ -33,10 +33,20 @@ BookingController.get("/customer/:id", VerifyToken, async (req, res) => {
         res.status(500).json();
     }
 });
+
 BookingController.get("/merchant/:id", VerifyToken, async (req, res) => {
     try {
         const bookings = await Booking.find({ merchantId: req.params.id });
         res.status(200).json(bookings);
+    } catch (e) {
+        res.status(500).json();
+    }
+});
+
+BookingController.get("/:id", VerifyToken, async (req, res) => {
+    try {
+        const booking = await Booking.findById(req.params.id);
+        res.status(200).json(booking);
     } catch (e) {
         res.status(500).json();
     }
@@ -51,6 +61,7 @@ BookingController.put("/:id", VerifyToken, async (req, res) => {
         await booking.updateOne(updatedBooking);
         res.status(200).json(booking);
     } catch (e) {
+        console.log(e);
         res.status(500).json();
     }
 });
