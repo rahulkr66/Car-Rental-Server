@@ -72,4 +72,14 @@ VehicleController.get("/:id", VerifyToken, async (req, res) => {
         res.status(500).json();
     }
 });
+
+VehicleController.delete("/:id", VerifyToken, async (req, res) => {
+    try {
+        await Vehicle.deleteOne({ _id: req.params.id });
+        res.status(200).json();
+    } catch (e) {
+        res.status(500).json();
+    }
+});
+
 module.exports = VehicleController;
