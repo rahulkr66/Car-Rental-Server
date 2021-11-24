@@ -17,6 +17,9 @@ const VehicleSchema = new mongoose.Schema({
         type: Number,
         required:true,
     },
+    vehicleImage: {
+        type: String,
+    },
     isBooked: {
         type: Boolean,
         default: false,
